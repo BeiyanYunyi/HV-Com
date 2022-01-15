@@ -1,11 +1,14 @@
 import colors from 'colors';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
+import format from 'date-fns/format';
 import route from './route';
 
 const { combine, timestamp, label, printf, splat } = winston.format;
 
 type ILevel = 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
+
+const formatDate = (dateStr: string) => format(new Date(dateStr), 'yyyy-MM-dd HH:mm:ss');
 
 // eslint-disable-next-line @typescript-eslint/no-shadow
 const myConsoleFormat = printf(({ level, message, label, timestamp }) => {
@@ -31,13 +34,13 @@ const myConsoleFormat = printf(({ level, message, label, timestamp }) => {
   })();
   /* @ts-ignore */
   return `${colors.bold(label)} ${colors[levelStr](`[${level.toUpperCase()}]`)} ${colors.underline(
-    timestamp,
+    formatDate(timestamp),
   )} ${colors.dim(message)}`;
 });
 
 const myFileFormat = printf(
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  ({ level, message, timestamp }) => `${timestamp} [${level}] ${message}`,
+  ({ level, message, timestamp }) => `${formatDate(timestamp)} [${level}] ${message}`,
 );
 
 const fileFormat = combine(splat(), timestamp(), myFileFormat);
