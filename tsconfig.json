@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["frontend/src", "backend", "config"],
+  "include": ["frontend/src", "backend", "config", "types"],
   "ts-node": {
     "transpileOnly": true,
     "compilerOptions": {

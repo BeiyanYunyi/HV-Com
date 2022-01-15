@@ -3,6 +3,7 @@ import express from 'express';
 import { createServer } from 'vite';
 import argv from './utils/argv';
 import apiRouter from './apiRouter';
+import storageProvider from './storageProvider';
 
 const root = path.resolve(`${__dirname}/../../`);
 const app = express();
@@ -18,6 +19,7 @@ app.use('/api', apiRouter);
   } else {
     app.use(express.static(path.join(root, 'frontend', 'dist')));
   }
+  await storageProvider.init();
 })();
 
 export default app;

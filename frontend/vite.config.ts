@@ -8,4 +8,23 @@ const root = path.resolve(`${__dirname}/..`);
 export default defineConfig({
   plugins: [react()],
   root: path.join(root, 'frontend'),
+  build: {
+    lib: {
+      entry: path.resolve(path.join(root, 'frontend', 'src', 'App.tsx')),
+      name: 'vCom',
+      // fileName: (format) => `vCom.${format}.js`,
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom', 'vditor'],
+
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+          vditor: 'Vditor',
+        },
+      },
+    },
+    manifest: true,
+  },
 });

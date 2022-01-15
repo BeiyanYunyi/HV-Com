@@ -20,6 +20,7 @@ module.exports = {
     'react/jsx-one-expression-per-line': 0,
     'react/jsx-props-no-spreading': 0,
     'react/function-component-definition': 0,
+    'react/require-default-props': 0,
   },
   parserOptions: {
     project: './tsconfig.json',
