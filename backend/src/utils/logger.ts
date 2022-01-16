@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import colors from 'colors';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
@@ -8,10 +9,9 @@ const { combine, timestamp, label, printf, splat } = winston.format;
 
 type ILevel = 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
 
-const formatDate = (dateStr: string) => format(new Date(dateStr), 'yyyy-MM-dd HH:mm:ss');
+const formatDate = (dateStr: string) => format(new Date(dateStr), 'MM-dd HH:mm:ss');
 
-// eslint-disable-next-line @typescript-eslint/no-shadow
-const myConsoleFormat = printf(({ level, message, label, timestamp }) => {
+const myConsoleFormat = printf(({ level, message, label, timestamp, statusCode }) => {
   const levelStr = (() => {
     switch (level as ILevel) {
       case 'error':
@@ -32,24 +32,30 @@ const myConsoleFormat = printf(({ level, message, label, timestamp }) => {
         return 'bgGray';
     }
   })();
+  const statusColor = (statusCode?.toString() as string | undefined)?.startsWith('2')
+    ? 'bgGreen'
+    : 'bgRed';
+  // colors.js is not fully typed, so sad.
   /* @ts-ignore */
-  return `${colors.bold(label)} ${colors[levelStr](`[${level.toUpperCase()}]`)} ${colors.underline(
-    formatDate(timestamp),
-  )} ${colors.dim(message)}`;
+  return `${label}${colors.underline(formatDate(timestamp))} ${colors[levelStr](
+    `[${level.toUpperCase()}]`,
+  )} ${statusCode ? `${colors[statusColor](`[${statusCode}]`)} ` : ''}${colors.dim(message)}`;
 });
 
 const myFileFormat = printf(
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  ({ level, message, timestamp }) => `${formatDate(timestamp)} [${level}] ${message}`,
+  ({ level, message, timestamp, statusCode }) =>
+    `${formatDate(timestamp)} [${level}] ${statusCode ? `[${statusCode}] ` : ' '}${message}`,
 );
 
 const fileFormat = combine(splat(), timestamp(), myFileFormat);
-const consoleFormat = combine(label({ label: 'HV-Com' }), timestamp(), myConsoleFormat);
+const consoleFormat = combine(label({ label: '🏗️' }), timestamp(), myConsoleFormat);
 
+/** `drf` means `daily rotate file` */
 const drfAllTransport = new DailyRotateFile({
   format: fileFormat,
   dirname: route.logRoute,
-  filename: 'log-%DATE%.log',
+  filename: 'log-%DATE%',
+  extension: '.log',
   datePattern: 'YYYY-MM-DD',
   maxSize: '50m',
   maxFiles: '14d',
@@ -59,7 +65,8 @@ const drfAllTransport = new DailyRotateFile({
 const drfErrorTransport = new DailyRotateFile({
   format: fileFormat,
   dirname: route.logRoute,
-  filename: 'error-%DATE%.log.gz',
+  filename: 'error-%DATE%',
+  extension: '.log',
   datePattern: 'YYYY-MM-DD',
   maxSize: '50m',
   maxFiles: '365d',

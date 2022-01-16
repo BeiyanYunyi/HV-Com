@@ -1,18 +1,18 @@
 export default interface ICommentInDB {
   ID: string;
   authorID: string;
-  replyTime: number;
+  replyTime: number | string;
   quotingID: string | null;
   content: string;
-  votes: number;
   route: string;
+  floor: number | string;
 }
 
 export interface ICommentInFrontend {
   author: IUserInFrontend;
   ID: string;
-  replyTime: number;
+  replyTime: number | string;
   quoting: IReplyInFrontend | null;
   content: string;
-  votes: number;
+  floor: number | string;
 }

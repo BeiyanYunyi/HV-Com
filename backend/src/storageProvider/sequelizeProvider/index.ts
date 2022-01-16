@@ -1,3 +1,4 @@
+import { setTimeout } from 'timers/promises';
 import StorageProvider from '../../../../types/StorageProvider';
 import Comment from '../../../../types/StorageProvider/Comment';
 import User from '../../../../types/StorageProvider/User';
@@ -11,8 +12,8 @@ class SequelizeStorageProvider implements StorageProvider {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  init(): Promise<void> {
-    return Promise.resolve();
+  async init(): Promise<void> {
+    await setTimeout(5000);
   }
 
   Comment: Comment;

@@ -1,13 +1,14 @@
-import path from 'path';
 import express from 'express';
+import path from 'path';
 import { createServer } from 'vite';
-import argv from './utils/argv';
 import apiRouter from './apiRouter';
+import errorHandler from './middlewares/errorHandler';
+import requestLogger from './middlewares/requestLogger';
 import storageProvider from './storageProvider';
+import argv from './utils/argv';
 
 const root = path.resolve(`${__dirname}/../../`);
 const app = express();
-app.use('/api', apiRouter);
 
 (async () => {
   if (argv.dev) {
@@ -21,5 +22,10 @@ app.use('/api', apiRouter);
   }
   await storageProvider.init();
 })();
+
+app.use(express.json());
+app.use(requestLogger);
+app.use('/api', apiRouter);
+app.use(errorHandler);
 
 export default app;

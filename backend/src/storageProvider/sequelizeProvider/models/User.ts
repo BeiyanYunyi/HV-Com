@@ -47,14 +47,14 @@ class User extends Model<IUserInDB> implements IUserInDB {
 
 User.init(
   {
-    id: { type: DataTypes.TEXT, primaryKey: true },
-    username: { type: DataTypes.TEXT, unique: true },
-    password: { type: DataTypes.TEXT },
-    avatar: { type: DataTypes.TEXT, allowNull: true },
-    mail: { type: DataTypes.TEXT, allowNull: true },
-    website: { type: DataTypes.TEXT, allowNull: true },
-    lastRevokeTime: { type: DataTypes.BIGINT },
-    trustLevel: { type: DataTypes.TEXT, allowNull: true },
+    id: { type: DataTypes.TEXT, primaryKey: true, allowNull: false },
+    username: { type: DataTypes.TEXT, unique: true, allowNull: false },
+    password: { type: DataTypes.TEXT, allowNull: false },
+    avatar: { type: DataTypes.TEXT },
+    mail: { type: DataTypes.TEXT },
+    website: { type: DataTypes.TEXT },
+    lastRevokeTime: { type: DataTypes.BIGINT, allowNull: false },
+    trustLevel: { type: DataTypes.TEXT },
   },
   {
     sequelize,

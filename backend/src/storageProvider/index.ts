@@ -1,5 +1,6 @@
+import StorageProvider from '../../../types/StorageProvider';
 import SequelizeStorageProvider from './sequelizeProvider';
 
-const storageProvider = new SequelizeStorageProvider();
+const storageProvider: StorageProvider = new SequelizeStorageProvider();
 
 export default storageProvider;

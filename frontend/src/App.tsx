@@ -1,13 +1,17 @@
 import Container from '@material-ui/core/Container';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import 'vditor/dist/index.css';
+import apiWrapper from './api/apiWrapper';
 import Comments from './components/Comments';
 import Editor, { EditorRef } from './components/Editor';
 import { StateProvider, useStateValue } from './state';
-import reducer from './state/reducer';
+import reducer, { initComment } from './state/reducer';
 
 const Main = () => {
-  const [{ comments }] = useStateValue();
+  const [{ comments }, dispatch] = useStateValue();
+  useEffect(() => {
+    apiWrapper.getComment(window.location.pathname).then((comms) => dispatch(initComment(comms)));
+  }, [dispatch]);
   const editorRef = useRef<EditorRef>(null);
   return (
     <Container>

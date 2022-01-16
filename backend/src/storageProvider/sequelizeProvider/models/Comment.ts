@@ -1,35 +1,54 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-cycle */
-/* eslint-disable @typescript-eslint/lines-between-class-members */
-import { DataTypes, Model } from 'sequelize/dist';
-import ICommentInDB from '../../../../../types/IComment';
+import { Association, DataTypes, Model } from 'sequelize/dist';
+import ICommentInDB, { ICommentInFrontend } from '../../../../../types/IComment';
+import { IUserInFrontend } from '../../../../../types/IUser';
 import sequelize from '../db';
+import User from './User';
 
 class Comment extends Model<ICommentInDB> implements ICommentInDB {
   declare ID: string;
+
   declare authorID: string;
-  declare replyTime: number;
+
+  declare replyTime: number | string;
+
   declare quotingID: string | null;
+
   declare content: string;
-  declare votes: number;
+
   declare route: string;
+
+  declare floor: number | string;
+
+  declare readonly author: IUserInFrontend;
+
+  declare readonly quoting: ICommentInFrontend;
+
+  declare static associations: {
+    author: Association<Comment, User>;
+    quoting: Association<Comment, Comment>;
+  };
+
+  declare toJSON: <T extends ICommentInFrontend | ICommentInDB>() => T;
 }
 
 Comment.init(
   {
-    ID: { type: DataTypes.TEXT, primaryKey: true },
-    authorID: { type: DataTypes.TEXT },
-    replyTime: { type: DataTypes.BIGINT },
+    ID: { type: DataTypes.TEXT, primaryKey: true, allowNull: false },
+    authorID: { type: DataTypes.TEXT, allowNull: false },
+    replyTime: { type: DataTypes.BIGINT, allowNull: false },
     quotingID: { type: DataTypes.TEXT },
-    content: { type: DataTypes.TEXT, allowNull: true },
-    votes: { type: DataTypes.INTEGER, defaultValue: 0 },
-    route: { type: DataTypes.TEXT },
+    content: { type: DataTypes.TEXT, allowNull: false },
+    route: { type: DataTypes.TEXT, allowNull: false },
+    floor: { type: DataTypes.BIGINT, allowNull: false },
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     modelName: 'comment',
-    indexes: [{ fields: ['replyTime', 'route'], using: 'BTREE' }],
+    indexes: [{ fields: ['floor', 'route'], using: 'BTREE' }],
   },
 );
 

@@ -6,6 +6,7 @@ const root = path.resolve(`${__dirname}/..`);
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  esbuild: { minify: true },
   plugins: [react()],
   root: path.join(root, 'frontend'),
   build: {
@@ -16,7 +17,6 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'vditor'],
-
       output: {
         globals: {
           react: 'React',
