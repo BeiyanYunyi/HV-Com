@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
-import ICommentInDB, { ICommentInFrontend } from '../../../../types/IComment';
+import ICommentInDB, { ICommentInFrontend, ICommentInserting } from '../../../../types/IComment';
 import StorageProvider from '../../../../types/StorageProvider';
-import Comment from '../../../../types/StorageProvider/Comment';
+import CCommentProvider from '../../../../types/StorageProvider/CCommentProvider';
 import NotFoundError from '../../errors/NotFoundError';
 import models from './models';
 
-export default class CommentProvider implements Comment {
+export default class CommentProvider implements CCommentProvider {
   constructor(parent: StorageProvider) {
     this.parent = parent;
   }
@@ -45,19 +45,25 @@ export default class CommentProvider implements Comment {
       include: this.commentInclude,
       attributes: { exclude: ['authorID', 'quotingID'] },
     });
-    if (!comment) return null;
-    return comment.toJSON<ICommentInFrontend>();
+    if (comment) return comment.toJSON<ICommentInFrontend>();
+    return null;
   }
 
-  async addComment(comment: ICommentInDB): Promise<ICommentInDB> {
+  async addComment(comment: ICommentInserting): Promise<ICommentInDB> {
     const user = await models.User.findByPk(comment.authorID, {
       include: models.User.associations.comments,
       rejectOnEmpty: true,
     });
     if (user) {
-      const commentInserted = await user.createComment(comment);
+      const count = await this.countComment(comment.route);
+      const commentInserted = await user.createComment({ ...comment, floor: count + 1 });
       return commentInserted.toJSON<ICommentInDB>();
     }
-    throw new NotFoundError('user not found');
+    throw new NotFoundError('User not found');
+  }
+
+  async countComment(route: string): Promise<number> {
+    const count = await models.Comment.count({ where: { route } });
+    return count;
   }
 }

@@ -1,3 +1,5 @@
+import { IUserInFrontend } from './IUser';
+
 export default interface ICommentInDB {
   ID: string;
   authorID: string;
@@ -8,6 +10,11 @@ export default interface ICommentInDB {
   floor: number | string;
 }
 
+export type ICommentInserting = Pick<
+  ICommentInDB,
+  'ID' | 'authorID' | 'content' | 'quotingID' | 'replyTime' | 'route'
+>;
+
 export interface ICommentInFrontend {
   author: IUserInFrontend;
   ID: string;
@@ -15,4 +22,15 @@ export interface ICommentInFrontend {
   quoting: IReplyInFrontend | null;
   content: string;
   floor: number | string;
+}
+
+export interface ICommentPostingAnonymously {
+  author: {
+    username: string;
+    mail: string | null;
+    website: string | null;
+  };
+  quotingID: string | null;
+  content: string;
+  route: string;
 }

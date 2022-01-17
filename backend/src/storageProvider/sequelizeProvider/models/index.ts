@@ -10,7 +10,9 @@ const options: SyncOptions = {
   alter: true,
 };
 
-User.sync(options);
-Comment.sync(options);
+export const syncDB = async () => {
+  await User.sync(options);
+  await Comment.sync(options);
+};
 
 export default { User, Comment };

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
-import Typography from '@material-ui/core/Typography';
+import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput';
+import Typography from '@mui/material/Typography';
 import { FC } from 'react';
 
 interface TextFieldElement extends OutlinedInputProps {
@@ -23,10 +23,6 @@ const TextField: FC<TextFieldElement> = ({ label, inputId, ...props }) => {
     alignContent: 'center',
     textAlign: 'center',
   });
-  const inputStyle = css({
-    display: 'block',
-    flex: 1,
-  });
   return (
     <div css={divStyle}>
       {label && (
@@ -34,7 +30,16 @@ const TextField: FC<TextFieldElement> = ({ label, inputId, ...props }) => {
           {label}
         </Typography>
       )}
-      <OutlinedInput size="small" margin="dense" css={inputStyle} name={selfInputId} {...props} />
+      <OutlinedInput
+        size="small"
+        margin="dense"
+        sx={{
+          display: 'block',
+          flex: 1,
+        }}
+        name={selfInputId}
+        {...props}
+      />
     </div>
   );
 };

@@ -1,16 +1,10 @@
 import express from 'express';
-import BadRequestError from './errors/BadRequestError';
-import storageProvider from './storageProvider';
+import commentRouter from './router/commentRouter';
 
 require('express-async-errors');
 
 const apiRouter = express.Router();
 
-apiRouter.get('/comments', async (req, res) => {
-  const { route } = req.query;
-  if (!route || typeof route !== 'string') throw new BadRequestError('Invalid query');
-  const comments = await storageProvider.Comment.getComments(route);
-  res.json(comments);
-});
+apiRouter.use('/comment', commentRouter);
 
 export default apiRouter;

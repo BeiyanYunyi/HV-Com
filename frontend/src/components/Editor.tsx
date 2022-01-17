@@ -1,12 +1,10 @@
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Stack from '@material-ui/core/Stack';
-import { forwardRef, useImperativeHandle, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
-import timeUtils from '../../../backend/src/utils/timeUtils';
-import { IUserInFrontend } from '../../../types/IUser';
+import apiWrapper from '../api/apiWrapper';
 import { useStateValue } from '../state';
 import { addComment } from '../state/reducer';
 import TextField from './TextField';
@@ -20,15 +18,18 @@ const Editor = forwardRef((props, ref) => {
   const [open, setOpen] = useState(false);
   const [vd, setVd] = useState<Vditor>();
   const [{ username, mail, website }, setInfo] = useState({ username: '', mail: '', website: '' });
+  const editorDivRef = useRef<HTMLDivElement>(null);
   useImperativeHandle(ref, () => ({ vd, open }));
-  const handleClick = async () => {
-    const vditor = new Vditor('comment-editor', {
+  const handleClick = () => {
+    if (!editorDivRef.current) return null;
+    const vditor = new Vditor(editorDivRef.current, {
       icon: 'material',
       minHeight: window.innerHeight / 2,
       mode: 'wysiwyg',
+      cache: { id: 'comment-editor' },
     });
     setVd(vditor);
-    setOpen(true);
+    return setOpen(true);
   };
   return (
     <>
@@ -37,7 +38,7 @@ const Editor = forwardRef((props, ref) => {
           点我开始回复
         </Button>
       )}
-      <div id="comment-editor" />
+      <div ref={editorDivRef} />
       {open && vd && (
         <>
           <Grid container spacing={1} sx={{ paddingTop: 1, marginBottom: 1 }}>
@@ -70,24 +71,13 @@ const Editor = forwardRef((props, ref) => {
             </Button>
             <Button
               variant="contained"
-              onClick={() => {
-                const author: IUserInFrontend = {
-                  id: uuidv4(),
-                  username,
-                  mail,
-                  website,
-                  avatar: null,
-                };
-                dispatch(
-                  addComment({
-                    ID: uuidv4(),
-                    replyTime: timeUtils.getUnixStamp(),
-                    quoting: null,
-                    floor: 0,
-                    content: vd.getValue(),
-                    author,
-                  }),
-                );
+              onClick={async () => {
+                const res = await apiWrapper.postComment({
+                  route: window.location.pathname,
+                  content: vd.getValue(),
+                  author: { username, mail, website },
+                });
+                dispatch(addComment(res));
                 vd.setValue('');
                 vd.clearCache();
               }}

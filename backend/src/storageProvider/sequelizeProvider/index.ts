@@ -1,8 +1,8 @@
-import { setTimeout } from 'timers/promises';
 import StorageProvider from '../../../../types/StorageProvider';
-import Comment from '../../../../types/StorageProvider/Comment';
-import User from '../../../../types/StorageProvider/User';
+import CCommentProvider from '../../../../types/StorageProvider/CCommentProvider';
+import CUserProvider from '../../../../types/StorageProvider/CUserProvider';
 import CommentProvider from './CommentProvider';
+import { syncDB } from './models';
 import UserProvider from './UserProvider';
 
 class SequelizeStorageProvider implements StorageProvider {
@@ -13,12 +13,12 @@ class SequelizeStorageProvider implements StorageProvider {
 
   // eslint-disable-next-line class-methods-use-this
   async init(): Promise<void> {
-    await setTimeout(5000);
+    await syncDB();
   }
 
-  Comment: Comment;
+  Comment: CCommentProvider;
 
-  User: User;
+  User: CUserProvider;
 }
 
 export default SequelizeStorageProvider;

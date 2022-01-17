@@ -1,14 +1,14 @@
 // eslint-disable-next-line import/no-cycle
 import StorageProvider from '.';
-import IUserInDB from '../IUser';
+import IUserInDB, { IUserToCreate } from '../IUser';
 
-export default class User {
+export default class CUserProvider {
   parent: StorageProvider;
 
   /** 创建用户
    * @param user 用户
    */
-  createUser(user: Pick<IUserInDB, 'id' | 'username' | 'password'>): Promise<void>;
+  createUser(user: IUserToCreate): Promise<void>;
 
   /** 获取单个用户信息
    * @param id 用户 id
@@ -24,7 +24,7 @@ export default class User {
       username?: string | undefined;
     },
     forAuth = false,
-  ): Promise<IUserInDB, null>;
+  ): Promise<IUserInDB | null>;
 
   /** 更新用户信息
    * @param userId 用户 ID

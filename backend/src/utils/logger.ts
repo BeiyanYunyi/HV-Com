@@ -4,6 +4,7 @@ import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import format from 'date-fns/format';
 import route from './route';
+import argv from './argv';
 
 const { combine, timestamp, label, printf, splat } = winston.format;
 
@@ -75,7 +76,7 @@ const drfErrorTransport = new DailyRotateFile({
 
 const consoleTransport = new winston.transports.Console({
   format: consoleFormat,
-  level: process.env.NODE_ENV === 'production' ? 'verbose' : 'silly',
+  level: !argv.dev ? 'verbose' : 'silly',
 });
 
 const logger = winston.createLogger({

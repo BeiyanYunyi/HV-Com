@@ -11,6 +11,8 @@ const root = path.resolve(`${__dirname}/../../`);
 const app = express();
 
 (async () => {
+  // test script will init the provider.
+  if (!argv.test) await storageProvider.init();
   if (argv.dev) {
     const viteDevServer = await createServer({
       root: path.join(root, 'frontend'),
@@ -20,7 +22,6 @@ const app = express();
   } else {
     app.use(express.static(path.join(root, 'frontend', 'dist')));
   }
-  await storageProvider.init();
 })();
 
 app.use(express.json());

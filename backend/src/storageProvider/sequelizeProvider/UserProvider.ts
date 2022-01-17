@@ -1,24 +1,20 @@
 /* eslint-disable class-methods-use-this */
-import IUserInDB from '../../../../types/IUser';
+import IUserInDB, { IUserToCreate } from '../../../../types/IUser';
 import StorageProvider from '../../../../types/StorageProvider';
-import UserClass from '../../../../types/StorageProvider/User';
+import CUserProvider from '../../../../types/StorageProvider/CUserProvider';
 import NotFoundError from '../../errors/NotFoundError';
 import timeUtils from '../../utils/timeUtils';
 import models from './models';
 
-export default class UserProvider implements UserClass {
+export default class UserProvider implements CUserProvider {
   constructor(parent: StorageProvider) {
     this.parent = parent;
   }
 
-  async createUser(
-    user: Pick<IUserInDB, 'id' | 'username' | 'password' | 'mail' | 'website'>,
-  ): Promise<void> {
+  async createUser(user: IUserToCreate): Promise<void> {
     const userToCreate: IUserInDB = {
       ...user,
       lastRevokeTime: timeUtils.getUnixStamp(),
-      trustLevel: 'user',
-      avatar: null,
     };
     await models.User.create(userToCreate);
   }

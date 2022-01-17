@@ -1,12 +1,12 @@
 /* eslint-disable import/no-cycle */
-import Comment from './Comment';
-import User from './User';
+import CCommentProvider from './CCommentProvider';
+import CUserProvider from './CUserProvider';
 
 export default class StorageProvider {
   /** 初始化：建表 */
   init(): Promise<void>;
 
-  Comment: Comment;
+  Comment: CCommentProvider;
 
-  User: User;
+  User: CUserProvider;
 }

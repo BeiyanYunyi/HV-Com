@@ -11,3 +11,8 @@ export default interface IUserInDB extends IUserInFrontend {
   lastRevokeTime: string | number;
   trustLevel: 'anonymous' | 'user' | 'manager' | 'administrator';
 }
+
+export type IUserToCreate = Pick<
+  IUserInDB,
+  'id' | 'username' | 'password' | 'mail' | 'website' | 'trustLevel' | 'avatar'
+>;

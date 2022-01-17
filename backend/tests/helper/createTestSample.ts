@@ -1,6 +1,6 @@
 import { setTimeout } from 'timers/promises';
-import storageProvider from '../src/storageProvider';
-import timeUtils from '../src/utils/timeUtils';
+import storageProvider from '../../src/storageProvider';
+import timeUtils from '../../src/utils/timeUtils';
 
 /** Insert test sample to database. */
 const createTestSample = async () => {
@@ -8,6 +8,10 @@ const createTestSample = async () => {
     id: '00000000-0000-0000-0000-000000000000',
     username: 'test',
     password: '',
+    mail: null,
+    website: null,
+    trustLevel: 'administrator',
+    avatar: null,
   });
   await storageProvider.Comment.addComment({
     ID: '00000000-0000-0000-0000-000000000000',
@@ -16,7 +20,6 @@ const createTestSample = async () => {
     quotingID: null,
     content: 'test',
     route: '/',
-    floor: 1,
   });
   await setTimeout(2000);
   await storageProvider.Comment.addComment({
@@ -26,7 +29,6 @@ const createTestSample = async () => {
     quotingID: '00000000-0000-0000-0000-000000000000',
     content: 'test2',
     route: '/',
-    floor: 2,
   });
 };
 
