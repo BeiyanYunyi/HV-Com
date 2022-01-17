@@ -6,10 +6,14 @@ const requestLogger = (
   res: Response<Record<string, any> | string>,
   next: () => unknown,
 ) => {
-  const { method, url, res: reqRes } = req;
-  logger.http({
-    message: `${method} ${url}`,
-    statusCode: reqRes?.statusCode,
+  const { method, url } = req;
+  const time = Date.now();
+  res.on('finish', () => {
+    logger.http({
+      message: `${url} - ${Date.now() - time}ms`,
+      statusCode: res.statusCode,
+      method,
+    });
   });
   next();
 };

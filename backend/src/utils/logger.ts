@@ -8,44 +8,70 @@ import argv from './argv';
 
 const { combine, timestamp, label, printf, splat } = winston.format;
 
-type ILevel = 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
+type TLevel = 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
+type THTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 const formatDate = (dateStr: string) => format(new Date(dateStr), 'MM-dd HH:mm:ss');
 
-const myConsoleFormat = printf(({ level, message, label, timestamp, statusCode }) => {
-  const levelStr = (() => {
-    switch (level as ILevel) {
-      case 'error':
-        return 'bgRed';
-      case 'debug':
-        return 'bgGray';
-      case 'http':
-        return 'bgBlue';
-      case 'info':
-        return 'bgGreen';
-      case 'silly':
-        return 'bgGray';
-      case 'verbose':
-        return 'bgGray';
-      case 'warn':
-        return 'bgYellow';
-      default:
-        return 'bgGray';
-    }
-  })();
+const getLevelColor = (level: TLevel) => {
+  switch (level) {
+    case 'error':
+      return 'bgRed';
+    case 'debug':
+      return 'bgGray';
+    case 'http':
+      return 'bgBlue';
+    case 'info':
+      return 'bgGreen';
+    case 'silly':
+      return 'bgGray';
+    case 'verbose':
+      return 'bgGray';
+    case 'warn':
+      return 'bgYellow';
+    default:
+      return 'bgGray';
+  }
+};
+
+const getMethodColor: (method: THTTPMethod) => keyof colors.Color = (method) => {
+  switch (method) {
+    case 'GET':
+      return 'bgGreen';
+    case 'POST':
+      return 'bgBlue';
+    case 'PUT':
+      return 'bgYellow';
+    case 'DELETE':
+      return 'bgRed';
+    default:
+      return 'bgMagenta';
+  }
+};
+
+const myConsoleFormat = printf(({ level, message, label, timestamp, statusCode, method }) => {
+  const levelStr = getLevelColor(level as TLevel);
   const statusColor = (statusCode?.toString() as string | undefined)?.startsWith('2')
     ? 'bgGreen'
     : 'bgRed';
-  // colors.js is not fully typed, so sad.
-  /* @ts-ignore */
-  return `${label}${colors.underline(formatDate(timestamp))} ${colors[levelStr](
-    `[${level.toUpperCase()}]`,
-  )} ${statusCode ? `${colors[statusColor](`[${statusCode}]`)} ` : ''}${colors.dim(message)}`;
+  let strToReturn = label + colors.underline(formatDate(timestamp));
+  if (level !== 'http') {
+    // colors.js is not fully typed, so sad.
+    /* @ts-ignore */
+    strToReturn += ` ${colors[levelStr](`[${level.toUpperCase()}]`)}`;
+  } else {
+    strToReturn += ` ${colors[getMethodColor(method as THTTPMethod)](`[${method}]`)} ${colors[
+      statusColor
+    ](`${statusCode}`)}`;
+  }
+  return `${strToReturn} ${colors.dim(message)}`;
 });
 
 const myFileFormat = printf(
-  ({ level, message, timestamp, statusCode }) =>
-    `${formatDate(timestamp)} [${level}] ${statusCode ? `[${statusCode}] ` : ' '}${message}`,
+  ({ level, message, timestamp, statusCode, method }) =>
+    `${formatDate(timestamp)} [${level}] ${method ? `[${method}] ` : ''}${
+      statusCode ? `[${statusCode}] ` : ''
+    }${message}`,
 );
 
 const fileFormat = combine(splat(), timestamp(), myFileFormat);
