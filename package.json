@@ -1,6 +1,7 @@
 {
   "name": "v-com",
   "version": "0.0.0",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "ts-node backend/index.ts",
     "dev": "ts-node backend/index.ts -d",
