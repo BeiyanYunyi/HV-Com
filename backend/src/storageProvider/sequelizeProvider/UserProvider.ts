@@ -16,7 +16,7 @@ export default class UserProvider implements CUserProvider {
       ...user,
       lastRevokeTime: timeUtils.getUnixStamp(),
     };
-    await models.User.create(userToCreate);
+    await models.User.bulkCreate([userToCreate], { updateOnDuplicate: ['lastRevokeTime'] });
   }
 
   async getUser(

@@ -3,7 +3,6 @@ import path from 'path';
 import { createServer } from 'vite';
 import apiRouter from './apiRouter';
 import errorHandler from './middlewares/errorHandler';
-import requestLogger from './middlewares/requestLogger';
 import storageProvider from './storageProvider';
 import argv from './utils/argv';
 
@@ -25,7 +24,7 @@ const app = express();
 })();
 
 app.use(express.json());
-app.use(requestLogger);
+app.use(express.urlencoded({ extended: false }));
 app.use('/api', apiRouter);
 app.use(errorHandler);
 

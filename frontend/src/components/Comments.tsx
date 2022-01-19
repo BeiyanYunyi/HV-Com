@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { FC, useEffect, useRef } from 'react';
 import Vditor from 'vditor';
 import { ICommentInFrontend } from '../../../types/IComment';
-import apiWrapper from '../api/apiWrapper';
+import apiWrapper from '../services/apiWrapper';
 import { useStateValue } from '../state';
 import { initComment } from '../state/reducer';
 

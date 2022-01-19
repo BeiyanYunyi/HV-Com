@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
-import apiWrapper from '../api/apiWrapper';
+import apiWrapper from '../services/apiWrapper';
 import { useStateValue } from '../state';
 import { addComment } from '../state/reducer';
 import TextField from './TextField';

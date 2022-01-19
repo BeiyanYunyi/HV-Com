@@ -25,6 +25,10 @@ const errorHandler = (
       return resToSend.status(404).send(error.message).end();
     case 'BadRequestError':
       return resToSend.status(400).send(error.message).end();
+    case 'Bad Request':
+      return resToSend.status(400).send(error.message).end();
+    case 'Method Not Allowed':
+      return resToSend.status(405).send(error.message).end();
     default:
       break;
   }

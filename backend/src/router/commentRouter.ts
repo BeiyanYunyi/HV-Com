@@ -35,16 +35,18 @@ commentRouter.post('/', async (req, res) => {
   }
   const id = uuidv5(body.author.username, config.uuidNameSpace);
   const ID = uuidv4();
-  const userToCreate: IUserToCreate = {
-    id,
-    username: body.author.username,
-    mail: body.author.mail,
-    password: '',
-    website: body.author.website,
-    trustLevel: 'anonymous',
-    avatar: null,
-  };
-  await storageProvider.User.createUser(userToCreate);
+  if (!userInDB) {
+    const userToCreate: IUserToCreate = {
+      id,
+      username: body.author.username,
+      mail: body.author.mail,
+      password: '',
+      website: body.author.website,
+      trustLevel: 'anonymous',
+      avatar: null,
+    };
+    await storageProvider.User.createUser(userToCreate);
+  }
   await storageProvider.Comment.addComment({
     ID,
     authorID: id,
