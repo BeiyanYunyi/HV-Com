@@ -21,7 +21,7 @@ At the cost of the above shortcoming, HV-Com has the following advantages.
 
 It also has these features.
 
-- Use markdown to have full WYSIWYG from editing to viewing.
+- Uses markdown, has full WYSIWYG from editing to viewing.
 - Support for all formats editable by Vditor, including
   - LaTeX formulas
   - mermaid.js flowcharts
