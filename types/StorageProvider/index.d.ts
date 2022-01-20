@@ -9,4 +9,6 @@ export default class StorageProvider {
   Comment: CCommentProvider;
 
   User: CUserProvider;
+
+  close(): Promise<void>;
 }

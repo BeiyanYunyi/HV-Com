@@ -7,7 +7,7 @@ export interface IUserInFrontend {
 }
 
 export default interface IUserInDB extends IUserInFrontend {
-  password: string;
+  password: string | null;
   lastRevokeTime: string | number;
   trustLevel: 'anonymous' | 'user' | 'manager' | 'administrator';
 }

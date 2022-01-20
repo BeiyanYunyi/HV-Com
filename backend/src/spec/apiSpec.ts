@@ -84,7 +84,11 @@ const apiSpec: OpenAPIV3.Document = {
       },
     },
     schemas: {
-      uuid: { type: 'string', maxLength: 36, minLength: 36, description: 'A UUID.' },
+      uuid: {
+        type: 'string',
+        description: 'A UUID.',
+        pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$',
+      },
       comment: { type: 'object' },
       comments: { type: 'array', items: { $ref: '#/components/schemas/comment' } },
     },

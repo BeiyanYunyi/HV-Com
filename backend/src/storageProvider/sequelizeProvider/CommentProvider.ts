@@ -1,8 +1,10 @@
 /* eslint-disable class-methods-use-this */
+import { QueryTypes } from 'sequelize/dist';
 import ICommentInDB, { ICommentInFrontend, ICommentInserting } from '../../../../types/IComment';
 import StorageProvider from '../../../../types/StorageProvider';
 import CCommentProvider from '../../../../types/StorageProvider/CCommentProvider';
 import NotFoundError from '../../errors/NotFoundError';
+import sequelize from './db';
 import models from './models';
 
 export default class CommentProvider implements CCommentProvider {
@@ -55,9 +57,25 @@ export default class CommentProvider implements CCommentProvider {
       rejectOnEmpty: true,
     });
     if (user) {
-      const count = await this.countComment(comment.route);
-      const commentInserted = await user.createComment({ ...comment, floor: count + 1 });
-      return commentInserted.toJSON<ICommentInDB>();
+      await sequelize.query(
+        {
+          query:
+            'INSERT INTO `comment` (`ID`,`authorID`,`replyTime`,`quotingID`,`content`,`route`,`floor`)' +
+            ' VALUES (?,?,?,?,?,?,(SELECT COUNT(*) FROM `comment` WHERE `route` = ?) + 1)',
+          values: [
+            comment.ID,
+            comment.authorID,
+            comment.replyTime,
+            comment.quotingID,
+            comment.content,
+            comment.route,
+            comment.route,
+          ],
+        },
+        { type: QueryTypes.INSERT },
+      );
+      const commentInserted = await models.Comment.findByPk(comment.ID);
+      return commentInserted!.toJSON<ICommentInDB>();
     }
     throw new NotFoundError('User not found');
   }

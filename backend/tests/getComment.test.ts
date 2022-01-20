@@ -8,6 +8,10 @@ beforeAll(async () => {
   await createTestSample();
 });
 
+afterAll(async () => {
+  await storageProvider.close();
+});
+
 describe('Get Comment Test', () => {
   test('Get comments', async () => {
     const res = await api.get('/api/comment?route=%2F').expect(200);
@@ -31,7 +35,7 @@ describe('Get Comment Test', () => {
 describe('Anonymous Post Comment Test', () => {
   test('Can post comments anonymously', async () => {
     const commentToPost1: ICommentPostingAnonymously = {
-      author: { username: 'test2', mail: null, website: null },
+      author: { username: 'test2', mail: '', website: null },
       quotingID: null,
       content: '1145141919810',
       route: '/',

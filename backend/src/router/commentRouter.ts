@@ -39,9 +39,9 @@ commentRouter.post('/', async (req, res) => {
     const userToCreate: IUserToCreate = {
       id,
       username: body.author.username,
-      mail: body.author.mail,
-      password: '',
-      website: body.author.website,
+      mail: body.author.mail || null,
+      password: null,
+      website: body.author.website || null,
       trustLevel: 'anonymous',
       avatar: null,
     };
