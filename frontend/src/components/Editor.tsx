@@ -4,7 +4,6 @@ import Stack from '@mui/material/Stack';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
-import apiWrapper from '../services/apiWrapper';
 import { useStateValue } from '../state';
 import { addComment } from '../state/reducer';
 import TextField from './TextField';
@@ -14,7 +13,8 @@ export interface EditorRef {
 }
 
 const Editor = forwardRef((props, ref) => {
-  const [, dispatch] = useStateValue();
+  const [state, dispatch] = useStateValue();
+  const { apiWrapper } = state;
   const [open, setOpen] = useState(false);
   const [vd, setVd] = useState<Vditor>();
   const [{ username, mail, website }, setInfo] = useState({ username: '', mail: '', website: '' });

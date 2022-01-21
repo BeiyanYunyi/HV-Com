@@ -1,6 +1,8 @@
 import Container from '@mui/material/Container';
-import { useRef } from 'react';
+import { FC, StrictMode, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import 'vditor/dist/index.css';
+import IOption from '../../types/IOption';
 import Comments from './components/Comments';
 import Editor, { EditorRef } from './components/Editor';
 import { StateProvider } from './state';
@@ -16,9 +18,19 @@ const Main = () => {
   );
 };
 
-const App = () => (
-  <StateProvider reducer={reducer}>
-    <Main />
-  </StateProvider>
+const App: FC<{ options: IOption }> = ({ options }) => (
+  <StrictMode>
+    <StateProvider reducer={reducer} initialStateOverride={{ backendURL: options.backendURL }}>
+      <Main />
+    </StateProvider>
+  </StrictMode>
 );
-export default App;
+
+const HVCom = {
+  App,
+  render(id: string, options: IOption) {
+    ReactDOM.render(<App options={options} />, document.querySelector(`div#${id}`));
+  },
+};
+
+export default HVCom;

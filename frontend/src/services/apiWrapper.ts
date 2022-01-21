@@ -1,8 +1,12 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { ICommentInFrontend, ICommentPostingAnonymously } from '../../../types/IComment';
 
-const apiWrapper = new (class ApiWrapper {
-  client = axios.create();
+class ApiWrapper {
+  client: AxiosInstance;
+
+  constructor(backendURL: string) {
+    this.client = axios.create({ baseURL: backendURL });
+  }
 
   async getComments(route: string) {
     const { data } = await this.client.get<ICommentInFrontend[]>('/api/comment', {
@@ -23,6 +27,6 @@ const apiWrapper = new (class ApiWrapper {
     const { data } = await this.client.post<ICommentInFrontend>('/api/comment', commentToPost);
     return data;
   }
-})();
+}
 
-export default apiWrapper;
+export default ApiWrapper;

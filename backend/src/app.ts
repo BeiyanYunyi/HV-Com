@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { createServer } from 'vite';
+import cors from 'cors';
 import apiRouter from './apiRouter';
 import errorHandler from './middlewares/errorHandler';
 import storageProvider from './storageProvider';
@@ -8,7 +9,7 @@ import argv from './utils/argv';
 
 const root = path.resolve(`${__dirname}/../../`);
 const app = express();
-
+app.use(cors());
 (async () => {
   // test script will init the provider.
   if (!argv.test) await storageProvider.init();

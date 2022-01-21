@@ -58,21 +58,10 @@ export default class CommentProvider implements CCommentProvider {
     });
     if (user) {
       await sequelize.query(
-        {
-          query:
-            'INSERT INTO `comment` (`ID`,`authorID`,`replyTime`,`quotingID`,`content`,`route`,`floor`)' +
-            ' VALUES (?,?,?,?,?,?,(SELECT COUNT(*) FROM `comment` WHERE `route` = ?) + 1)',
-          values: [
-            comment.ID,
-            comment.authorID,
-            comment.replyTime,
-            comment.quotingID,
-            comment.content,
-            comment.route,
-            comment.route,
-          ],
-        },
-        { type: QueryTypes.INSERT },
+        'INSERT INTO "comment" ("ID","authorID","replyTime","quotingID","content","route","floor")' +
+          ' VALUES ($ID,$authorID,$replyTime,$quotingID,$content,$route,' +
+          '(SELECT COUNT(*) FROM "comment" WHERE "route" = $route) + 1)',
+        { type: QueryTypes.INSERT, model: models.Comment, mapToModel: true, bind: comment },
       );
       const commentInserted = await models.Comment.findByPk(comment.ID);
       return commentInserted!.toJSON<ICommentInDB>();

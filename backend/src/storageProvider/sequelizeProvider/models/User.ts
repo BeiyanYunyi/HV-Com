@@ -49,7 +49,7 @@ User.init(
   {
     id: { type: DataTypes.TEXT, primaryKey: true, allowNull: false },
     username: { type: DataTypes.TEXT, unique: true, allowNull: false },
-    password: { type: DataTypes.TEXT, allowNull: true },
+    password: { type: DataTypes.TEXT },
     avatar: { type: DataTypes.TEXT },
     mail: { type: DataTypes.TEXT },
     website: { type: DataTypes.TEXT },

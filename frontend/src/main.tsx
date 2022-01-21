@@ -1,10 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import HVCom from './App';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.querySelector('div#root'),
-);
+HVCom.render('root', { backendURL: '/' });

@@ -29,7 +29,7 @@ const apiSpec: OpenAPIV3.Document = {
                     type: 'object',
                     required: ['username', 'mail', 'website'],
                     properties: {
-                      username: { type: 'string', nullable: false },
+                      username: { type: 'string', nullable: false, minLength: 1, maxLength: 64 },
                       mail: { type: 'string', nullable: true },
                       website: { type: 'string', nullable: true },
                     },
@@ -65,6 +65,18 @@ const apiSpec: OpenAPIV3.Document = {
         },
       },
     },
+    '/api/generateAvatar/{username}': {
+      parameters: [{ $ref: '#/components/parameters/username' }],
+      get: {
+        summary: 'Get a genereted avatar.',
+        responses: {
+          '200': {
+            description: 'OK',
+            content: { 'image/svg+xml': { schema: { type: 'string' } } },
+          },
+        },
+      },
+    },
   },
   components: {
     parameters: {
@@ -81,6 +93,13 @@ const apiSpec: OpenAPIV3.Document = {
         in: 'query',
         required: true,
         schema: { type: 'string', description: 'route' },
+      },
+      username: {
+        description: 'username',
+        name: 'username',
+        in: 'path',
+        required: true,
+        schema: { type: 'string', description: 'username' },
       },
     },
     schemas: {

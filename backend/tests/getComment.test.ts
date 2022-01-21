@@ -67,6 +67,19 @@ describe('Anonymous Post Comment Test', () => {
     expect(res3.body.content).toBe('1145141919810');
     expect(res3.body.route).toBe('/test');
   });
+  test('Injection test', async () => {
+    const injectStr = "dd');DROP TABLE `comment`;--";
+    const comment: ICommentPostingAnonymously = {
+      author: { username: 'test2', mail: null, website: null },
+      quotingID: null,
+      content: injectStr,
+      route: '/',
+    };
+    const res = await api.post('/api/comment').send(comment).expect(201);
+    const { ID } = res.body;
+    const res2 = await api.get(`/api/comment/${ID}`).expect(200);
+    expect(res2.body.content).toBe(injectStr);
+  });
   test('Should 409 if username conflicts with signed user', async () => {
     const commentToPost: ICommentPostingAnonymously = {
       author: { username: 'test', mail: null, website: null },
@@ -120,5 +133,11 @@ describe('Anonymous Post Comment Test', () => {
       api.post('/api/comment').send(commentToPost1).expect(400),
       api.post('/api/comment').send(commentToPost2).expect(400),
     ]);
+  });
+});
+
+describe('Get Avatar Test', () => {
+  test('can get avatar', async () => {
+    await api.get('/api/generateAvatar/YaJuSenpai').expect(200);
   });
 });

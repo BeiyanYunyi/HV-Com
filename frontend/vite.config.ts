@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(path.join(root, 'frontend', 'src', 'App.tsx')),
-      name: 'vCom',
+      name: 'HVCom',
       // fileName: (format) => `vCom.${format}.js`,
     },
     rollupOptions: {
@@ -26,5 +26,7 @@ export default defineConfig({
       },
     },
     manifest: true,
+    outDir: path.join(root, 'dist'),
+    emptyOutDir: true,
   },
 });
