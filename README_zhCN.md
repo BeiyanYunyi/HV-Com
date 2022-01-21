@@ -45,6 +45,65 @@ yarn
 yarn dev
 ```
 
+## 🏭 如何在前端部署
+
+在第一个正式版前，HV-Com 不提供预构建的版本。如果你实在想尝鲜，可以自行从源码构建。
+
+```bash
+sudo npm install -g yarn
+git clone https://github.com/lixiang810/HV-Com
+cd HV-Com
+yarn
+yarn build
+```
+
+这会在 `HV-Com/dist` 下生成 `hv-com.es.js` 和 `hv-com.umd.js`。
+
+### UMD 引入
+
+可以参考如下 HTML。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <!-- (Optional) Font for Material-UI -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <!-- Style for Vditor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor/dist/index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- React -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <!-- React-DOM -->
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+      crossorigin
+    ></script>
+    <!-- Vditor -->
+    <script src="https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js"></script>
+    <!-- HV-Com -->
+    <script src="hv-com.umd.js"></script>
+    <!-- Then, call HVCom to render DOM. -->
+    <script>
+      HVCom.render('root', { backendURL: 'http://localhost:3000/' });
+    </script>
+  </body>
+</html>
+```
+
+### ESM 引入
+
+WIP
+
 ## 🗺️ 背景
 
 Vditor 作为所见即所得的 markdown 编辑器而闻名，又有 `Vditor.preview()` 方法可对 markdown 进行前端渲染，这让据此实现一个评论系统成为可能。与此同时，现有的评论系统却无一使用 vditor 作为其编辑器，绝大多数评论系统的富文本编辑器都不支持所见即所得，为普通用户的使用带来了门槛。

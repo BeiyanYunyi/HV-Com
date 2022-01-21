@@ -6,7 +6,7 @@
 
 ## 💡 Intro
 
-HV-Com is a commenting system written in TypeScript. It uses [vditor](https://github.com/Vanessa219/vditor) as markdown editor and [lute](https://github.com/88250/lute) as renderer.
+HV-Com is a commenting system written in TypeScript. It uses [Vditor](https://github.com/Vanessa219/vditor) as markdown editor and [lute](https://github.com/88250/lute) as renderer.
 
 ## ✨ Feature
 
@@ -46,6 +46,65 @@ cd HV-Com
 yarn
 yarn dev
 ```
+
+## 🏭 How to use it in webpage
+
+HV-Com will not provide pre-built versions until the first release. You need to build from source yourself if you really want to use it.
+
+```bash
+sudo npm install -g yarn
+git clone https://github.com/lixiang810/HV-Com
+cd HV-Com
+yarn
+yarn build
+```
+
+It will generate `hv-com.es.js` and `hv-com.umd.js` under `HV-Com/dist`.
+
+### UMD
+
+You can refer to these HTML.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <!-- (Optional) Font for Material-UI -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <!-- Style for Vditor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor/dist/index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- React -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <!-- React-DOM -->
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+      crossorigin
+    ></script>
+    <!-- Vditor -->
+    <script src="https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js"></script>
+    <!-- HV-Com -->
+    <script src="hv-com.umd.js"></script>
+    <!-- Then, call HVCom to render DOM. -->
+    <script>
+      HVCom.render('root', { backendURL: 'http://localhost:3000/' });
+    </script>
+  </body>
+</html>
+```
+
+### ESM
+
+WIP
 
 ## 🗺️ Background
 
