@@ -4,6 +4,8 @@ import { defineConfig } from 'vite';
 
 const root = path.resolve(`${__dirname}/..`);
 
+const external = !!process.env.EXTERNAL;
+
 // https://vitejs.dev/config/
 export default defineConfig({
   esbuild: { minify: true },
@@ -13,20 +15,22 @@ export default defineConfig({
     lib: {
       entry: path.resolve(path.join(root, 'frontend', 'src', 'App.tsx')),
       name: 'HVCom',
-      // fileName: (format) => `vCom.${format}.js`,
+      formats: ['umd'],
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'vditor'],
+      external: external ? ['react', 'react-dom', 'vditor'] : [],
       output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          vditor: 'Vditor',
-        },
+        globals: external
+          ? {
+              react: 'React',
+              'react-dom': 'ReactDOM',
+              vditor: 'Vditor',
+            }
+          : undefined,
       },
     },
     manifest: true,
-    outDir: path.join(root, 'dist'),
+    outDir: external ? path.join(root, 'dist', 'external') : path.join(root, 'dist', 'aio'),
     emptyOutDir: true,
   },
 });

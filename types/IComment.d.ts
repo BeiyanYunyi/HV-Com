@@ -19,7 +19,7 @@ export interface ICommentInFrontend {
   author: IUserInFrontend;
   ID: string;
   replyTime: number | string;
-  quoting: IReplyInFrontend | null;
+  quoting: ICommentInFrontend | null;
   content: string;
   floor: number | string;
 }

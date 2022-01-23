@@ -135,9 +135,3 @@ describe('Anonymous Post Comment Test', () => {
     ]);
   });
 });
-
-describe('Get Avatar Test', () => {
-  test('can get avatar', async () => {
-    await api.get('/api/generateAvatar/YaJuSenpai').expect(200);
-  });
-});

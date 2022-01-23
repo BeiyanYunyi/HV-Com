@@ -1,3 +1,3 @@
 import HVCom from './App';
 
-HVCom.render('root', { backendURL: '/' });
+HVCom.render({ id: 'root', backendURL: '/' });

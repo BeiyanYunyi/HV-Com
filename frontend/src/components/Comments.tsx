@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { FC, useEffect, useRef } from 'react';
 import Vditor from 'vditor';
+import format from 'date-fns/format';
 import { ICommentInFrontend } from '../../../types/IComment';
 import { useStateValue } from '../state';
 import { initComment } from '../state/reducer';
@@ -19,10 +20,22 @@ const Comment: FC<{ comment: ICommentInFrontend }> = ({ comment }) => {
     }
   }, [comment]);
   return (
-    <Card>
-      <CardHeader title={comment.author.username} avatar={<AppAvatar user={comment.author} />} />
-      <CardContent>
-        <div ref={targetDivRef} />
+    <Card variant="outlined" sx={{ padding: 1 }}>
+      {comment.quoting && <Comment comment={comment.quoting} />}
+      <CardHeader
+        sx={{ margin: -1, marginTop: 0 }}
+        title={comment.author.username}
+        subheader={
+          <>
+            #{comment.floor}
+            <br />
+            {format(Number(comment.replyTime) * 1000, 'yyyy-MM-dd HH:mm:ss')}
+          </>
+        }
+        avatar={<AppAvatar user={comment.author} />}
+      />
+      <CardContent sx={{ margin: -1, marginTop: 0 }}>
+        <Typography component="div" ref={targetDivRef} />
       </CardContent>
     </Card>
   );

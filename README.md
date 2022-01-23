@@ -12,7 +12,7 @@ HV-Com is a commenting system written in TypeScript. It uses [Vditor](https://gi
 
 HV-Com's HV has many meanings.
 
-- HeaVy - This commenting system is quite large and will have a significant performance overhead on both the front and back ends. `React`+`HV-Com`+`Vditor`+`lute`=`45kB`+`42kB`+`110kB`+`315kB`=`512kB` in gzipped. As `Vditor` is not minified yet, the size of it is larger than it should be and will be fixed in the latest release.
+- HeaVy - This commenting system is quite large and will have a significant performance overhead on both the front and back ends. `React`+`HV-Com`+`Vditor`+`lute`=`45kB`+`42kB`+`110kB`+`315kB`=`512kB` in gzipped. As `Vditor` is not minified yet, the size of it is larger than it should be and will be fixed in the latest release. If you use the all in one (AIO) bundle, it is as large as `153kB` gzipped.
 
 At the cost of the above shortcoming, HV-Com has the following advantages.
 
@@ -59,11 +59,11 @@ yarn
 yarn build
 ```
 
-It will generate `hv-com.es.js` and `hv-com.umd.js` under `HV-Com/dist`.
+It will generate `hv-com.umd.js` under `HV-Com/dist/aio` and `HV-Com/dist/external`.
 
-### UMD
+### UMD (External)
 
-You can refer to these HTML.
+To use `HV-Com/dist/external/hv-com.umd.js`, you should import React, ReactDOM and Vditor yourself. You can refer to these HTML.
 
 ```html
 <!DOCTYPE html>
@@ -96,15 +96,43 @@ You can refer to these HTML.
     <script src="hv-com.umd.js"></script>
     <!-- Then, call HVCom to render DOM. -->
     <script>
-      HVCom.render('root', { backendURL: 'http://localhost:3000/' });
+      HVCom.render({ id: 'root', backendURL: 'http://localhost:3000/' });
     </script>
   </body>
 </html>
 ```
 
-### ESM
+### UMD (AIO)
 
-WIP
+If use `HV-Com/dist/aio/hv-com.umd.js`, since it bundled all requirements, you can just import a js file. You can refer to these HTML:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <!-- (Optional) Font for Material-UI -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <!-- Style for Vditor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor/dist/index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- HV-Com, all in one -->
+    <script src="hv-com.umd.js"></script>
+    <!-- Then, call HVCom to render DOM. -->
+    <script>
+      HVCom.render({ id: 'root', backendURL: 'http://localhost:3000/' });
+    </script>
+  </body>
+</html>
+```
 
 ## 🗺️ Background
 

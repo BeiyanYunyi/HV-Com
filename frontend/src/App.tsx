@@ -28,8 +28,8 @@ const App: FC<{ options: IOption }> = ({ options }) => (
 
 const HVCom = {
   App,
-  render(id: string, options: IOption) {
-    ReactDOM.render(<App options={options} />, document.querySelector(`div#${id}`));
+  render(options: IOption) {
+    ReactDOM.render(<App options={options} />, document.querySelector(`div#${options.id}`));
   },
 };
 

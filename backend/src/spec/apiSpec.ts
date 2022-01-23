@@ -35,7 +35,7 @@ const apiSpec: OpenAPIV3.Document = {
                     },
                   },
                   quotingID: { type: 'string', nullable: true },
-                  content: { type: 'string', nullable: false },
+                  content: { type: 'string', nullable: false, minLength: 1 },
                   route: { type: 'string', nullable: false },
                 },
               },
@@ -61,18 +61,6 @@ const apiSpec: OpenAPIV3.Document = {
             content: {
               'application/json': { schema: { $ref: '#/components/schemas/comment' } },
             },
-          },
-        },
-      },
-    },
-    '/api/generateAvatar/{username}': {
-      parameters: [{ $ref: '#/components/parameters/username' }],
-      get: {
-        summary: 'Get a genereted avatar.',
-        responses: {
-          '200': {
-            description: 'OK',
-            content: { 'image/svg+xml': { schema: { type: 'string' } } },
           },
         },
       },

@@ -10,7 +10,7 @@ HV-Com 是一个使用 TypeScript 编写的评论系统。它使用 [Vditor](htt
 
 HV-Com 的 HV 有很多个意思：
 
-- HeaVy - 这套评论系统的规模不小，对前后端都将有不小的性能开销。gzip 下 `React`+`HV-Com`+`Vditor`+`lute`=`45kB`+`42kB`+`110kB`+`315kB`=`512kB`，其中 `Vditor` 暂未 minify，体积偏大，将在最新的 release 中修复。
+- HeaVy - 这套评论系统的规模不小，对前后端都将有不小的性能开销。gzip 下 `React`+`HV-Com`+`Vditor`+`lute`=`45kB`+`42kB`+`110kB`+`315kB`=`512kB`，其中 `Vditor` 暂未 minify，体积偏大，将在最新的 release 中修复。All in one 模式 bundle 体积在 gzip 下为 `153kB`。
 
 以上述缺陷为代价，HV-Com 有如下优势：
 
@@ -57,11 +57,11 @@ yarn
 yarn build
 ```
 
-这会在 `HV-Com/dist` 下生成 `hv-com.es.js` 和 `hv-com.umd.js`。
+这会在 `HV-Com/dist/external` 和 `HV-Com/dist/aio` 下生成 `hv-com.umd.js`。
 
-### UMD 引入
+### External UMD 引入
 
-可以参考如下 HTML。
+该模式使用 `HV-Com/dist/external/hv-com.umd.js`，需要在外部引入 React、ReactDom 和 Vditor。可以参考如下 HTML。
 
 ```html
 <!DOCTYPE html>
@@ -94,15 +94,43 @@ yarn build
     <script src="hv-com.umd.js"></script>
     <!-- Then, call HVCom to render DOM. -->
     <script>
-      HVCom.render('root', { backendURL: 'http://localhost:3000/' });
+      HVCom.render({ id: 'root', backendURL: 'http://localhost:3000/' });
     </script>
   </body>
 </html>
 ```
 
-### ESM 引入
+### AIO UMD 引入
 
-WIP
+该模式使用 `HV-Com/dist/aio/hv-com.umd.js`，内置了所有依赖，故只需导入一个 js 即可。可以参考如下 HTML。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <!-- (Optional) Font for Material-UI -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <!-- Style for Vditor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor/dist/index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- HV-Com -->
+    <script src="hv-com.umd.js"></script>
+    <!-- Then, call HVCom to render DOM. -->
+    <script>
+      HVCom.render({ id: 'root', backendURL: 'http://localhost:3000/' });
+    </script>
+  </body>
+</html>
+```
 
 ## 🗺️ 背景
 

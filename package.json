@@ -6,8 +6,9 @@
     "start": "ts-node backend/index.ts",
     "dev": "ts-node backend/index.ts -d",
     "test": "rimraf temp && cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
-    "build": "tsc && vite build --config frontend/vite.config.ts",
-    "preview": "vite preview"
+    "build": "tsc && yarn build:external",
+    "build:external": "cross-env EXTERNAL=true vite build --config frontend/vite.config.ts && yarn build:allInOne",
+    "build:allInOne": "vite build --config frontend/vite.config.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
