@@ -21,8 +21,8 @@ class Quoting extends Model<IQuoting> implements IQuoting {
 Quoting.init(
   {
     id: { type: DataTypes.UUID, primaryKey: true },
-    source: { type: DataTypes.TEXT, allowNull: false, references: { model: Comment, key: 'ID' } },
-    target: { type: DataTypes.TEXT, allowNull: false, references: { model: Comment, key: 'ID' } },
+    source: { type: DataTypes.UUID, allowNull: false, references: { model: Comment, key: 'ID' } },
+    target: { type: DataTypes.UUID, allowNull: false, references: { model: Comment, key: 'ID' } },
   },
   {
     sequelize,

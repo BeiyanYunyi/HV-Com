@@ -3,7 +3,7 @@ import ApiWrapper from '../services/apiWrapper';
 import IAction from './IAction';
 import IState from './IState';
 
-const initialState: Pick<IState, 'backendURL' | 'comments'> = { comments: [], backendURL: '/' };
+const initialState: Omit<IState, 'apiWrapper'> = { comments: [], backendURL: '/' };
 
 export const StateContext = createContext<[IState, Dispatch<IAction>]>([
   { ...initialState, apiWrapper: new ApiWrapper(initialState.backendURL) },

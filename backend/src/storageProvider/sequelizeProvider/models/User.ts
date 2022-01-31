@@ -7,11 +7,14 @@ import {
   HasManyCreateAssociationMixin,
   HasManyGetAssociationsMixin,
   HasManyHasAssociationMixin,
+  HasManyRemoveAssociationMixin,
+  HasManySetAssociationsMixin,
   Model,
 } from 'sequelize/dist';
 import IUserInDB from '../../../../../types/IUser';
 import sequelize from '../db';
 import Comment from './Comment';
+import Session from './Session';
 
 class User extends Model<IUserInDB> implements IUserInDB {
   declare password: string;
@@ -30,24 +33,43 @@ class User extends Model<IUserInDB> implements IUserInDB {
 
   declare id: string;
 
-  declare getComments: HasManyGetAssociationsMixin<Comment>;
+  declare getComment: HasManyGetAssociationsMixin<Comment>;
 
-  declare addComment: HasManyAddAssociationMixin<Comment, number>;
+  declare addComment: HasManyAddAssociationMixin<Comment, string>;
 
-  declare hasComment: HasManyHasAssociationMixin<Comment, number>;
+  declare hasComment: HasManyHasAssociationMixin<Comment, string>;
 
-  declare countComments: HasManyCountAssociationsMixin;
+  declare countComment: HasManyCountAssociationsMixin;
 
   declare createComment: HasManyCreateAssociationMixin<Comment>;
 
+  declare addSession: HasManyAddAssociationMixin<Session, string>;
+
+  declare countSession: HasManyCountAssociationsMixin;
+
+  declare createSession: HasManyCreateAssociationMixin<Session>;
+
+  declare getSession: HasManyGetAssociationsMixin<Session>;
+
+  declare hasSession: HasManyHasAssociationMixin<Session, string>;
+
+  declare removeSession: HasManyRemoveAssociationMixin<Session, string>;
+
+  declare setSession: HasManySetAssociationsMixin<Session, string>;
+
   declare readonly comments?: Comment[];
 
-  declare static associations: { comments: Association<User, Comment> };
+  declare readonly sessions?: Session[];
+
+  declare static associations: {
+    comments: Association<User, Comment>;
+    session: Association<User, Session>;
+  };
 }
 
 User.init(
   {
-    id: { type: DataTypes.TEXT, primaryKey: true, allowNull: false },
+    id: { type: DataTypes.UUID, primaryKey: true, allowNull: false },
     username: { type: DataTypes.TEXT, unique: true, allowNull: false },
     password: { type: DataTypes.TEXT },
     avatar: { type: DataTypes.TEXT },

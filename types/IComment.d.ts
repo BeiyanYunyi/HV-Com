@@ -10,10 +10,7 @@ export default interface ICommentInDB {
   floor: number | string;
 }
 
-export type ICommentInserting = Pick<
-  ICommentInDB,
-  'ID' | 'authorID' | 'content' | 'quotingID' | 'replyTime' | 'route'
->;
+export type ICommentInserting = Omit<ICommentInDB, 'floor'>;
 
 export interface ICommentInFrontend {
   author: IUserInFrontend;

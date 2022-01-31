@@ -35,10 +35,10 @@ class Comment extends Model<ICommentInDB> implements ICommentInDB {
 
 Comment.init(
   {
-    ID: { type: DataTypes.TEXT, primaryKey: true, allowNull: false },
-    authorID: { type: DataTypes.TEXT, allowNull: false },
+    ID: { type: DataTypes.UUID, primaryKey: true, allowNull: false },
+    authorID: { type: DataTypes.UUID, allowNull: false },
     replyTime: { type: DataTypes.BIGINT, allowNull: false },
-    quotingID: { type: DataTypes.TEXT },
+    quotingID: { type: DataTypes.UUID },
     content: { type: DataTypes.TEXT, allowNull: false },
     route: { type: DataTypes.TEXT, allowNull: false },
     floor: { type: DataTypes.BIGINT, allowNull: false },

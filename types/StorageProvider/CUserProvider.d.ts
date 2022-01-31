@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import StorageProvider from '.';
+import { ISession } from '../../backend/src/storageProvider/sequelizeProvider/models/Session';
 import IUserInDB, { IUserToCreate } from '../IUser';
 
 export default class CUserProvider {
@@ -36,4 +37,11 @@ export default class CUserProvider {
    * @param userId 用户 ID
    */
   deleteUser(userId: string): Promise<void>;
+
+  /** Get a user by session
+   * @param sessionID The ID of session
+   */
+  getUserBySession(sessionID: string): Promise<IUserInDB | null>;
+
+  createSession(userID: string): Promise<ISession>;
 }
