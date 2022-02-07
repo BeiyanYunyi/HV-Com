@@ -1243,6 +1243,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/bcryptjs@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "@types/bcryptjs@npm:2.4.2"
+  checksum: 220dade7b0312b41e23ccfb15f2ddde7804eb3c7ef41db41a6c49054be1e19a15eb3dd8c8ef196494f0866307cce22ad6f3f272941387124707d81dc66155bbc
+  languageName: node
+  linkType: hard
+
 "@types/body-parser@npm:*":
   version: 1.19.2
   resolution: "@types/body-parser@npm:1.19.2"
@@ -2162,6 +2169,13 @@ __metadata:
   dependencies:
     tweetnacl: ^0.14.3
   checksum: 4edfc9fe7d07019609ccf797a2af28351736e9d012c8402a07120c4453a3b789a15f2ee1530dc49eee8f7eb9379331a8dd4b3766042b9e502f74a68e7f662291
+  languageName: node
+  linkType: hard
+
+"bcryptjs@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "bcryptjs@npm:2.4.3"
+  checksum: 0e80ed852a41f5dfb1853f53ee14a7390b0ef263ce05dba6e2ef3cd919dfad025a7c21ebcfe5bc7fa04b100990edf90c7a877ff7fe623d3e479753253131b629
   languageName: node
   linkType: hard
 
@@ -4464,6 +4478,7 @@ __metadata:
     "@mui/material": ^5.2.8
     "@mui/system": ^5.2.8
     "@multiavatar/multiavatar": ^1.0.7
+    "@types/bcryptjs": ^2.4.2
     "@types/cors": ^2.8.12
     "@types/express": ^4.17.13
     "@types/jest": ^27.4.0
@@ -4478,6 +4493,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.9.1
     "@vitejs/plugin-react": ^1.1.4
     axios: ^0.24.0
+    bcryptjs: ^2.4.3
     colors: ^1.4.0
     cors: ^2.8.5
     cross-env: ^7.0.3
