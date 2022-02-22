@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize/dist';
+import { Sequelize } from 'sequelize';
 import config from '../../../../config/config.json';
 import argv from '../../utils/argv';
 import logger from '../../utils/logger';

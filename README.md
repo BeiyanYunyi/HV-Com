@@ -40,11 +40,11 @@ It also has these features.
 ## 🛠️ How to develop
 
 ```bash
-sudo npm install -g yarn
+sudo npm install -g pnpm
 git clone https://github.com/lixiang810/HV-Com
 cd HV-Com
-yarn
-yarn dev
+pnpm install
+pnpm dev
 ```
 
 ## 🏭 How to use it in webpage
@@ -52,11 +52,11 @@ yarn dev
 HV-Com will not provide pre-built versions until the first release. You need to build from source yourself if you really want to use it.
 
 ```bash
-sudo npm install -g yarn
+sudo npm install -g pnpm
 git clone https://github.com/lixiang810/HV-Com
 cd HV-Com
-yarn
-yarn build
+pnpm install
+pnpm build
 ```
 
 It will generate `hv-com.umd.js` under `HV-Com/dist/aio` and `HV-Com/dist/external`.

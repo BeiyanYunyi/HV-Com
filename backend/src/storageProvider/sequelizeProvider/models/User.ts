@@ -10,7 +10,7 @@ import {
   HasManyRemoveAssociationMixin,
   HasManySetAssociationsMixin,
   Model,
-} from 'sequelize/dist';
+} from 'sequelize';
 import IUserInDB from '../../../../../types/IUser';
 import sequelize from '../db';
 import Comment from './Comment';

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { Association, DataTypes, Model } from 'sequelize/dist';
+import { Association, DataTypes, Model } from 'sequelize';
 import sequelize from '../db';
 import User from './User';
 

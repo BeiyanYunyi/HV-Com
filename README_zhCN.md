@@ -38,11 +38,11 @@ HV-Com 的 HV 有很多个意思：
 ## 🛠️ 如何开发
 
 ```bash
-sudo npm install -g yarn
+sudo npm install -g pnpm
 git clone https://github.com/lixiang810/HV-Com
 cd HV-Com
-yarn
-yarn dev
+pnpm install
+pnpm dev
 ```
 
 ## 🏭 如何在前端部署
@@ -50,11 +50,11 @@ yarn dev
 在第一个正式版前，HV-Com 不提供预构建的版本。如果你实在想尝鲜，可以自行从源码构建。
 
 ```bash
-sudo npm install -g yarn
+sudo npm install -g pnpm
 git clone https://github.com/lixiang810/HV-Com
 cd HV-Com
-yarn
-yarn build
+pnpm install
+pnpm build
 ```
 
 这会在 `HV-Com/dist/external` 和 `HV-Com/dist/aio` 下生成 `hv-com.umd.js`。

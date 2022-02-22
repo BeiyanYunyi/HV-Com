@@ -1,4 +1,4 @@
-import { SyncOptions } from 'sequelize/dist';
+import { SyncOptions } from 'sequelize';
 import Comment from './Comment';
 import Quoting from './Quoting';
 import Session from './Session';

@@ -1,4 +1,4 @@
-import { Association, DataTypes, Model } from 'sequelize/dist';
+import { Association, DataTypes, Model } from 'sequelize';
 import sequelize from '../db';
 import Comment from './Comment';
 

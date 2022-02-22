@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-cycle */
-import { Association, DataTypes, Model } from 'sequelize/dist';
+import { Association, DataTypes, Model } from 'sequelize';
 import ICommentInDB, { ICommentInFrontend } from '../../../../../types/IComment';
 import { IUserInFrontend } from '../../../../../types/IUser';
 import sequelize from '../db';

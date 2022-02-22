@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { QueryTypes } from 'sequelize/dist';
+import { QueryTypes } from 'sequelize';
 import ICommentInDB, { ICommentInFrontend, ICommentInserting } from '../../../../types/IComment';
 import StorageProvider from '../../../../types/StorageProvider';
 import CCommentProvider from '../../../../types/StorageProvider/CCommentProvider';

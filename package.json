@@ -6,8 +6,8 @@
     "start": "ts-node backend/index.ts",
     "dev": "ts-node backend/index.ts -d",
     "test": "rimraf temp && cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
-    "build": "tsc && yarn build:external",
-    "build:external": "cross-env EXTERNAL=true vite build --config frontend/vite.config.ts && yarn build:allInOne",
+    "build": "tsc && pnpm run build:external",
+    "build:external": "cross-env EXTERNAL=true vite build --config frontend/vite.config.ts && pnpm build:allInOne",
     "build:allInOne": "vite build --config frontend/vite.config.ts"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
     "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "sequelize": "^6.13.0",
+    "sequelize": "6.13.0",
     "source-map-support": "^0.5.21",
     "sqlite3": "^5.0.2",
     "ts-node": "^10.4.0",
@@ -72,5 +72,5 @@
     "typescript": "^4.5.4",
     "vite": "^2.7.12"
   },
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "pnpm@6.17.0"
 }
